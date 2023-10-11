@@ -27,16 +27,32 @@
 //
 // You should NOT modify any existing code except for adding two lines of attributes.
 
-// I AM NOT DONE
 
-extern "Rust" {
-    fn my_demo_function(a: u32) -> u32;
-    fn my_demo_function_alias(a: u32) -> u32;
+#[link(name = "my_demo_function")]
+extern "Rust" fn my_demo_function(a: u32) -> u32 {
+    Foo::my_demo_function(a)
 }
+
+#[link(name = "my_demo_function")]
+extern "Rust" fn my_demo_function_alias(a: u32) -> u32 {
+    my_demo_function(a)
+}
+
+// extern "Rust" {
+//     #[link(name = "my_demo_function")]
+//     fn my_demo_function(a: u32) -> u32 {
+//         Foo::my_demo_function(a)
+//     }
+
+//     #[link(name = "my_demo_function")]
+//     fn my_demo_function_alias(a: u32) -> u32 {
+//         my_demo_function(a)
+//     }
+// }
 
 mod Foo {
     // No `extern` equals `extern "Rust"`.
-    fn my_demo_function(a: u32) -> u32 {
+    pub fn my_demo_function(a: u32) -> u32 {
         a
     }
 }
